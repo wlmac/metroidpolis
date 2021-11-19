@@ -69,6 +69,14 @@ client.on('message', msg => {
     }
 });
 
+client.on('guildDelete', (guild) => {
+    let rawd = fs.readFileSync('./data/data.json');
+    let parsedd = JSON.parse(rawd);
+    parsedd.push = parsedd.push.filter(e => e.guildid !== guild.id);
+    let newraw = JSON.stringify(parsedd);
+    fs.writeFileSync('./data/data.json', newraw);
+})
+
 client.login(tokens.token);
 
 setInterval(function () {
