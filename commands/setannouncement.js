@@ -1,7 +1,5 @@
 const fs = require('fs');
 const arrayHelpers = require('../lib/array');
-const config = require('../data/config');
-const fs = require('fs');
 
 exports.name = 'setannouncement';
 exports.helpArgs = '[channel mention]';
@@ -12,7 +10,7 @@ exports.verify = function (msg) {
 }
 
 exports.execute = function (msg, args, client) {
-    if (msg.mentions.channels.size() > 0 && msg.mentions.channels.first().isText()) {
+    if (msg.mentions.channels.size > 0 && msg.mentions.channels.first().isText()) {
         let rawdata = fs.readFileSync('./data/data.json');
         let parsed = JSON.parse(rawdata);
         let gpos = arrayHelpers.getElementByProperty(parsed.push, "guildid", msg.guildId);
