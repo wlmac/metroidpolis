@@ -1,0 +1,23 @@
+{
+  "name": "metroidpolis",
+  "version": "0.0.1",
+  "description": "Discord bot to mirror announcements to configured channels",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wlmac/metroidpolis.git"
+  },
+  "author": "ApocalypseCalculator",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/wlmac/metroidpolis/issues"
+  },
+  "homepage": "https://github.com/wlmac/metroidpolis#readme",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "discord.js": "^13.3.1"
+  }
+}
