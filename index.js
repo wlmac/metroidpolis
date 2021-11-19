@@ -1,7 +1,9 @@
 const Discord = require('discord.js');
+const fs = require('fs');
 const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES] });
 const tokens = require('./data/token');
 const config = require('./data/config');
+const push = require('./lib/push');
 
 var commands = {};
 fs.readdirSync('./commands/').forEach(function (file) {
@@ -21,10 +23,10 @@ fs.readdirSync('./commands/').forEach(function (file) {
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}`);
     client.user.setPresence({
-        activity: {
+        activities: [{
             name: `${config.prefix}help for commands`,
             type: 'WATCHING'
-        },
+        }],
         status: 'online'
     });
 });
@@ -47,7 +49,7 @@ client.on('message', msg => {
             if (!cmd.verify(msg)) continue;
             embed = embed.addField(`${config.prefix}${cmd.name} ${cmd.helpArgs}`.trim(), cmd.helpText);
         }
-        msg.channel.send(embed);
+        msg.channel.send({ embeds: [embed] });
     }
     else if (command in commands) {
         if (commands[command].verify(msg)) {
@@ -68,3 +70,8 @@ client.on('message', msg => {
 });
 
 client.login(tokens.token);
+
+setInterval(function () {
+    console.log('Running announcement pushing script');
+    push.start(client);
+}, 1000 * 60 * 2)
