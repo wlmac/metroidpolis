@@ -6,7 +6,7 @@ const config = require('./data/config');
 var commands = {};
 fs.readdirSync('./commands/').forEach(function (file) {
     let m = require('./commands/' + file);
-    if (m.name == null || m.helpArgs == null || m.helpText == null || m.execute == null || m.verify == null) {
+    if (m.name == null || m.helpArgs == null || m.helpText == null || m.execute == null || m.verify == null || m.permReq == null) {
         console.error(`\x1b[31mInvalid command: ${file}\x1b[0m`);
     }
     else if (m.name in commands) {
@@ -40,6 +40,7 @@ client.on('message', msg => {
     if (command === 'help') {
         var embed = new Discord.MessageEmbed()
             .setTitle('Command List')
+            .setDescription('[] denotes mandatory arguments, () denotes optional ones')
             .addField(`${config.prefix}help`, `Shows this help menu`);
         for (var commandName in commands) {
             var cmd = commands[commandName];
@@ -50,10 +51,15 @@ client.on('message', msg => {
     }
     else if (command in commands) {
         if (commands[command].verify(msg)) {
-            commands[command].execute(msg, args, client);
+            try {
+                commands[command].execute(msg, args, client);
+            }
+            catch {
+                msg.channel.send('A fatal error occurred');
+            }
         }
         else {
-            msg.channel.send('OI you do not have permission to use this command >:(');
+            msg.channel.send(`This command requires permission(s): \`${commands[command].permReq}\``);
         }
     }
     else {
