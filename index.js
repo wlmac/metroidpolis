@@ -80,6 +80,5 @@ client.on('guildDelete', (guild) => {
 client.login(tokens.token);
 
 setInterval(function () {
-    console.log('Running announcement pushing script');
     push.start(client);
 }, 1000 * 60 * 2)
