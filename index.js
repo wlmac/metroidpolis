@@ -42,7 +42,7 @@ client.on('message', msg => {
     if (command === 'help') {
         var embed = new Discord.MessageEmbed()
             .setTitle('Command List')
-            .setDescription('[] denotes mandatory arguments, () denotes optional ones')
+            .setDescription('[] denotes mandatory arguments, () denotes optional ones. If you need help, DM \`ApocalypseCalculator#7096\`.')
             .addField(`${config.prefix}help`, `Shows this help menu`);
         for (var commandName in commands) {
             var cmd = commands[commandName];
@@ -75,6 +75,12 @@ client.on('guildDelete', (guild) => {
     parsedd.push = parsedd.push.filter(e => e.guildid !== guild.id);
     let newraw = JSON.stringify(parsedd);
     fs.writeFileSync('./data/data.json', newraw);
+})
+
+client.on('guildCreate', (guild) => {
+    if(guild.systemChannel && guild.systemChannel.viewable) {
+        guild.systemChannel.send(`Hello!\nThank you for inviting ${client.user.username}. To get started, use \`${config.prefix}help\``);
+    }
 })
 
 client.login(tokens.token);
