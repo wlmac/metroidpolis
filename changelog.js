@@ -1,10 +1,11 @@
-const changelog = 'Metroidpolis has been updated!\n\nYou can now add a filter onto announcements forwarding, this way you can whitelist or blacklist certain tags or clubs. See m&help for more details!';
+const changelog = `You can now add set pings for roles or users on announcements forwarding! In addition, there are new settings for edited announcements forwarding! See m&help for more details!`;
 
 
 const Discord = require('discord.js');
 const fs = require('fs');
 const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES] });
 const tokens = require('./data/token');
+const package = require('./package.json');
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}. Starting changelog push.`);
@@ -28,7 +29,7 @@ function propogate(sublist) {
             client.channels.fetch(cid).then(channel => {
                 try {
                     console.log(`Sent ${cid}`);
-                    channel.send(changelog);
+                    channel.send(`Metroidpolis has been updated to v${package.version}!\n\n${changelog}`);
                 }
                 catch {}
             }).catch((err) => console.log(err));
