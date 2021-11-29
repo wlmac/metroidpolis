@@ -1,6 +1,6 @@
 {
   "name": "metroidpolis",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Discord bot to mirror announcements to configured channels",
   "main": "index.js",
   "scripts": {
