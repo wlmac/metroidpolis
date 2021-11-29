@@ -16,18 +16,23 @@ exports.execute = function (msg, args, client) {
                 let rawdata = fs.readFileSync('./data/data.json');
                 let parsed = JSON.parse(rawdata);
                 let gpos = arrayHelpers.getElementByProperty(parsed.push, "guildid", msg.guildId);
-                if (parsed.push[gpos].filter) {
-                    msg.channel.send(`Current filter setting \`${parsed.push[gpos].filter.listing} ${parsed.push[gpos].filter.type}: ${parsed.push[gpos].filter.content.join(',')}\` will be overwritten.`);
+                if (gpos == -1) {
+                    msg.channel.send('Announcements forwarding is not set up!');
                 }
-                let filter = {
-                    type: args[1],
-                    listing: args[0],
-                    content: args[2].split(',')
+                else {
+                    if (parsed.push[gpos].filter) {
+                        msg.channel.send(`Current filter setting \`${parsed.push[gpos].filter.listing} ${parsed.push[gpos].filter.type}: ${parsed.push[gpos].filter.content.join(',')}\` will be overwritten.`);
+                    }
+                    let filter = {
+                        type: args[1],
+                        listing: args[0],
+                        content: args[2].split(',')
+                    }
+                    parsed.push[gpos].filter = filter;
+                    let newraw = JSON.stringify(parsed);
+                    fs.writeFileSync('./data/data.json', newraw);
+                    msg.channel.send(`Filter setting \`${parsed.push[gpos].filter.listing} ${parsed.push[gpos].filter.type}: ${parsed.push[gpos].filter.content.join(',')}\` applied.`);
                 }
-                parsed.push[gpos].filter = filter;
-                let newraw = JSON.stringify(parsed);
-                fs.writeFileSync('./data/data.json', newraw);
-                msg.channel.send(`Filter setting \`${parsed.push[gpos].filter.listing} ${parsed.push[gpos].filter.type}: ${parsed.push[gpos].filter.content.join(',')}\` applied.`);
             }
             else {
                 msg.channel.send('Invalid arguments, refer to help arguments');
