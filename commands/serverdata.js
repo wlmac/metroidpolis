@@ -20,7 +20,7 @@ exports.execute = function (msg, args, client) {
     else {
         let embed = new Discord.MessageEmbed();
         embed.setTitle(`Server Data for ${msg.guild.name}`);
-        embed.setDescription(`Current announcements forwarding channel: <#${parsed.push[gpos].channelid}>\n**Filter settings**\n${(parsed.push[gpos].filter) ? `Current filter setting is \`${parsed.push[gpos].filter.listing} ${parsed.push[gpos].filter.type}: ${parsed.push[gpos].filter.content.join(',')}\`. (exclusive means a blacklist, inclusive is whitelisting)` : 'No filter settings applied. '}\n**Mention settings**\n${msgifyMentions(parsed.push[gpos].mentions)}`);
+        embed.setDescription(`Current announcements forwarding channel: <#${parsed.push[gpos].channelid}>\n**Filter Settings**\n${(parsed.push[gpos].filter) ? `Current filter setting is \`${parsed.push[gpos].filter.listing} ${parsed.push[gpos].filter.type}: ${parsed.push[gpos].filter.content.join(',')}\`. (exclusive means a blacklist, inclusive is whitelisting)` : 'No filter settings applied. '}\n**Edited Announcements Settings**\n${(parsed.push[gpos].editsettings) ? parsed.push[gpos].editsettings : "None"}\n**Mention Settings**\n${msgifyMentions(parsed.push[gpos].mentions)}`);
         msg.channel.send({embeds: [embed]}).catch(err => msg.channel.send('Your server settings is too large to be displayed'));
     }
 }
