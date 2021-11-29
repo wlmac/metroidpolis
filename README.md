@@ -8,7 +8,7 @@ A bot that regularly scans for announcements on maclyonsden and pushes them to v
 
 Required: 
 
-Node.js, v12 or up (with a preferably updated version of npm)
+Node.js, v16.6.0 or up (with a preferably updated version of npm)
 
 
 Setup: 
