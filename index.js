@@ -42,7 +42,7 @@ client.on('message', msg => {
     if (command === 'help') {
         var embed = new Discord.MessageEmbed()
             .setTitle('Command List')
-            .setDescription('[] denotes mandatory arguments, () denotes optional ones. If you need help, DM \`ApocalypseCalculator#7096\`.')
+            .setDescription('[] denotes mandatory arguments, () denotes optional ones. If you need help, contact us [here](https://forms.gle/3sDQvVtAx1N7e1cb7).')
             .addField(`${config.prefix}help`, `Shows this help menu`);
         for (var commandName in commands) {
             var cmd = commands[commandName];
