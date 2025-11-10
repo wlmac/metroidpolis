@@ -16,7 +16,7 @@ Setup:
 npm install
 node sync
 ```
-Then go to data/token.js and add your Discord bot token in
+Then rename `.env_example` to `.env` and fill in the values. Next, go to `data/config.js` update the values
 
 
 To run: 

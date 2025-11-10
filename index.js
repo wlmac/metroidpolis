@@ -1,9 +1,15 @@
-const Discord = require('discord.js');
+const { Client, GatewayIntentBits } = require('discord.js');
 const fs = require('fs');
-const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES] });
-const tokens = require('./data/token');
 const config = require('./data/config');
 const push = require('./lib/push');
+
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+  ],
+});
 
 var commands = {};
 fs.readdirSync('./commands/').forEach(function (file) {
@@ -83,8 +89,8 @@ client.on('guildCreate', (guild) => {
     }
 })
 
-client.login(tokens.token);
+client.login(config.token);
 
 setInterval(function () {
     push.start(client);
-}, 1000 * 60 * 2)
+}, config.interval)
