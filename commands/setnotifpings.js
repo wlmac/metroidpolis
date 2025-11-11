@@ -2,12 +2,13 @@ const fs = require('fs');
 const arrayHelpers = require('../lib/array');
 const Discord = require('discord.js');
 
+
 exports.name = 'setnotifpings';
 exports.helpArgs = '[tag or club] [the tag or club slug] [role or user mentions]';
 exports.helpText = 'Sets roles or users to ping for specific tags or clubs.';
 exports.permReq = "manage server";
 exports.verify = function (msg) {
-    return msg.member.permissions.has('MANAGE_GUILD');
+    return msg.member.permissions.has(Discord.PermissionFlagsBits.ManageGuild);
 }
 
 exports.execute = function (msg, args, client) {
@@ -40,13 +41,17 @@ exports.execute = function (msg, args, client) {
                     msg.mentions.members.forEach(member => {
                         mention.pingtargets.push({ id: member.id, type: "user" });
                     })
-                    let embed = new Discord.MessageEmbed()
+                    let embed = new Discord.EmbedBuilder()
                     if (mpos == -1) {
                         parsed.push[gpos].mentions.push(mention);
-                        embed.addField(`Added Notif Ping`, `Set ${args[0]}:${args[1]} to mention ${listMentions(mention.pingtargets)}`);
+                        embed.addFields(
+                            {name: `Added Notif Ping`, value: `Set ${args[0]}:${args[1]} to mention ${listMentions(mention.pingtargets)}`}
+                        );
                     }
                     else {
-                        embed.addField(`Overwrote Notif Ping`, `Set ${args[0]}:${args[1]} to mention ${listMentions(mention.pingtargets)} (old notif ping is ${listMentions(parsed.push[gpos].mentions[mpos].pingtargets)})`);
+                        embed.addFields({
+                            name: `Overwrote Notif Ping`, value: `Set ${args[0]}:${args[1]} to mention ${listMentions(mention.pingtargets)} (old notif ping is ${listMentions(parsed.push[gpos].mentions[mpos].pingtargets)})`}
+                        );
                         parsed.push[gpos].mentions[mpos] = mention;
                     }
                     let newraw = JSON.stringify(parsed);

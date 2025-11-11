@@ -1,12 +1,13 @@
 const fs = require('fs');
 const arrayHelpers = require('../lib/array');
+const { PermissionFlagsBits } = require("discord.js")
 
 exports.name = 'setfilter';
 exports.helpArgs = '[inclusive or exclusive] [tag or club] [comma separated list, no spaces]';
 exports.helpText = 'Apply a filter on announcements forwarding. Must use exact slug.';
 exports.permReq = "manage server";
 exports.verify = function (msg) {
-    return msg.member.permissions.has('MANAGE_GUILD');
+    return msg.member.permissions.has(PermissionFlagsBits.ManageGuild);
 }
 
 exports.execute = function (msg, args, client) {

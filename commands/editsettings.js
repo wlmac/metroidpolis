@@ -1,12 +1,13 @@
 const fs = require('fs');
 const arrayHelpers = require('../lib/array');
+const { PermissionFlagsBits } = require("discord.js")
 
 exports.name = 'editsettings';
 exports.helpArgs = '[normal or noping or none]';
 exports.helpText = 'Settings for edited announcements forwarding';
 exports.permReq = "manage server";
 exports.verify = function (msg) {
-    return msg.member.permissions.has('MANAGE_GUILD');
+    return msg.member.permissions.has(PermissionFlagsBits.ManageGuild);
 }
 
 exports.execute = function (msg, args, client) {

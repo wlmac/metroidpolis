@@ -1,13 +1,20 @@
 const changelog = `You can now add set pings for roles or users on announcements forwarding! In addition, there are new settings for edited announcements forwarding! See m&help for more details!`;
 
 
-const Discord = require('discord.js');
+const { Client, GatewayIntentBits, Events } = require('discord.js');
 const fs = require('fs');
-const client = new Discord.Client({ intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES] });
-const tokens = require('./data/token');
+const config = require('./data/config');
 const package = require('./package.json');
 
-client.on('ready', () => {
+const client = new Client({
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent,
+  ],
+});
+
+client.on(Events.ClientReady, () => {
     console.log(`Logged in as ${client.user.tag}. Starting changelog push.`);
     start();
 });
@@ -39,4 +46,4 @@ function propogate(sublist) {
     }, 2000)
 }
 
-client.login(tokens.token);
+client.login(config.token);

@@ -1,20 +1,21 @@
 const fs = require('fs');
 const arrayHelpers = require('../lib/array');
+const { ChannelType, PermissionFlagsBits } = require('discord.js');
 
 exports.name = 'setannouncement';
 exports.helpArgs = '[channel mention]';
 exports.helpText = 'Sets the announcement forwarding channel for this server';
 exports.permReq = "manage server";
 exports.verify = function (msg) {
-    return msg.member.permissions.has('MANAGE_GUILD');
+    return msg.member.permissions.has(PermissionFlagsBits.ManageGuild);
 }
 
 exports.execute = function (msg, args, client) {
-    if (msg.mentions.channels.size > 0 && msg.mentions.channels.first().isText()) {
+    if (msg.mentions.channels.size > 0 && msg.mentions.channels.first().type == ChannelType.GuildText) {
         let rawdata = fs.readFileSync('./data/data.json');
         let parsed = JSON.parse(rawdata);
         let gpos = arrayHelpers.getElementByProperty(parsed.push, "guildid", msg.guildId);
-        if (msg.mentions.channels.first().permissionsFor(client.user).has("SEND_MESSAGES")) {
+        if (msg.mentions.channels.first().permissionsFor(client.user).has(PermissionFlagsBits.SendMessages)) {
             if (gpos == -1) {
                 let newobj = {
                     channelid: msg.mentions.channels.first().id,
