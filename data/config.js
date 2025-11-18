@@ -1,6 +1,4 @@
-const { loadEnvFile } = require('node:process');
-
-loadEnvFile();
+require("dotenv").config();
 
 module.exports = {
     prefix: process.env.PREFIX,

@@ -18,6 +18,7 @@
   "homepage": "https://github.com/wlmac/metroidpolis#readme",
   "dependencies": {
     "axios": "^1.4.0",
-    "discord.js": "^14.24.2"
+    "discord.js": "^14.24.2",
+    "dotenv": "^17.2.3"
   }
 }
