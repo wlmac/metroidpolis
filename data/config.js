@@ -2,7 +2,7 @@ require("dotenv").config();
 
 module.exports = {
     prefix: process.env.PREFIX,
-    queryLimit: parseInt(process.env.QUERY_LIMIT), // tracks the x most recent announcements
+    period: process.env.PERIOD, // tracks the previous announcements between (now - period) and now (in ms)
     token: process.env.TOKEN,
     url: process.env.URL,
     interval: 1000 * 60 * 2,
